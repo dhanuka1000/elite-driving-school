@@ -18,7 +18,7 @@ public class Instructor extends User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "instructor_id")
-    private Long instructorId;
+    private String instructorId;
 
     @Column(name = "full_name", nullable = false)
     private String fullName;

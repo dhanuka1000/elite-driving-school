@@ -16,13 +16,13 @@ public class Lesson {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "lession_id")
-    private Long sessionId;
+    private String sessionId;
 
     @Column(name = "date")
     private LocalDateTime date;
 
     @Column(name = "duration")
-    private Integer duration;
+    private String duration;
 
     @Column(name = "location")
     private String location;

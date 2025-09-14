@@ -18,4 +18,6 @@ module lk.ijse.elitedrivingschool {
 
     exports lk.ijse.elitedrivingschool;
     exports lk.ijse.elitedrivingschool.controller;
+    exports lk.ijse.elitedrivingschool.dto;
+    opens lk.ijse.elitedrivingschool.dto to javafx.fxml;
 }

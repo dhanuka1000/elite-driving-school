@@ -23,7 +23,7 @@ public class Course {
     private String name;
 
     @Column(name = "duration")
-    private Integer duration;
+    private String duration;
 
     @Column(name = "fee", nullable = false)
     private Double fee;

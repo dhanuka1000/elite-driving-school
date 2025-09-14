@@ -16,7 +16,7 @@ public class Enrolment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "student_id", referencedColumnName = "user_id")
@@ -30,5 +30,5 @@ public class Enrolment {
     private LocalDate enrolmentDate;
 
     @Column(name = "upfront_paid")
-    private Boolean upfrontPaid;
+    private LocalDate upfrontPaid;
 }
