@@ -31,7 +31,7 @@ public class FactoryConfiguration {
         configuration.addAnnotatedClass(User.class)
                 .addAnnotatedClass(Enrolment.class)
                 .addAnnotatedClass(Course.class)
-                .addAnnotatedClass(Lession.class)
+                .addAnnotatedClass(Lesson.class)
                 .addAnnotatedClass(Learning.class)
                 .addAnnotatedClass(Payment.class)
                 .addAnnotatedClass(Student.class)
