@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.elitedrivingschool.controller.loginController">
+   <children>
+      <VBox alignment="CENTER" layoutX="5.0" layoutY="5.0" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #f1f2f6; -fx-background-radius: 20; -fx-border-radius: 20;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label />
+            <Label />
+            <Label />
+            <Label />
+            <Label text="&quot;CLEAN EYE&quot;">
+               <font>
+                  <Font size="36.0" />
+               </font>
+               <textFill>
+                  <LinearGradient endX="1.0" endY="1.0" startX="1.0">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color red="1.0" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color green="1.0" blue="0.13705578446388245" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </LinearGradient>
+               </textFill>
+               <VBox.margin>
+                  <Insets bottom="10.0" />
+               </VBox.margin>
+            </Label>
+            <Label text="Eye Clinic Management Systerm">
+               <font>
+                  <Font size="22.0" />
+               </font>
+               <textFill>
+                  <LinearGradient endX="1.0" endY="1.0" startX="1.0">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color red="0.9368420839309692" green="0.16307991743087769" blue="0.16307991743087769" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color red="0.1294347047805786" green="0.29068875312805176" blue="0.8736842274665833" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </LinearGradient>
+               </textFill>
+               <VBox.margin>
+                  <Insets bottom="30.0" />
+               </VBox.margin>
+            </Label>
+            <Label />
+            <Label />
+            <Label />
+            <HBox alignment="TOP_CENTER" prefHeight="31.0" prefWidth="372.0">
+               <children>
+                  <Text fill="#306e3a" strokeType="OUTSIDE" strokeWidth="0.0" text="User Name" wrappingWidth="83.75762939453125">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Text>
+                  <TextField fx:id="userName" promptText="User Name" />
+               </children>
+            </HBox>
+            <HBox alignment="TOP_CENTER" prefHeight="31.0" prefWidth="372.0">
+               <children>
+                  <Text fill="#306e3a" strokeType="OUTSIDE" strokeWidth="0.0" text="Password" wrappingWidth="83.75762939453125">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Text>
+                  <TextField fx:id="password" promptText="Password" />
+               </children>
+            </HBox>
+            <Label />
+            <Button fx:id="loginBtn" mnemonicParsing="false" onAction="#btnGoHomePage" style="-fx-background-color: #6eea74; -fx-background-radius: 15;" text="Logging" textFill="#2c662e">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="4.0" />
+               </VBox.margin>
+            </Button>
+            <Label />
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
