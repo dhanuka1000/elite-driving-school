@@ -16,7 +16,7 @@ public class Lesson {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "lession_id")
-    private String sessionId;
+    private String lessionId;
 
     @Column(name = "date")
     private LocalDateTime date;

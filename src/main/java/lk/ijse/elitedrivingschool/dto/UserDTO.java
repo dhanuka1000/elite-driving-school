@@ -2,6 +2,8 @@ package lk.ijse.elitedrivingschool.dto;
 
 import lombok.*;
 
+import java.time.LocalDate;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -9,4 +11,10 @@ import lombok.*;
 @ToString
 
 public class UserDTO {
+
+    private String userId;
+    private String userName;
+    private String password;
+    private String role;
+    private LocalDate registrationDate;
 }

@@ -2,6 +2,8 @@ package lk.ijse.elitedrivingschool.dto.tm;
 
 import lombok.*;
 
+import java.time.LocalDate;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -9,4 +11,11 @@ import lombok.*;
 @ToString
 
 public class PaymentTM {
+
+    private String paymentId;
+    private Double amount;
+    private LocalDate paymentDate;
+    private String paymentMethod;
+    private String status;
+    private String studentId;
 }
