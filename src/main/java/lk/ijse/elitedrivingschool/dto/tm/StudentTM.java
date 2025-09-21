@@ -19,5 +19,5 @@ public class StudentTM {
     private String phone;
     private String email;
     private String address;
-    private Lesson lessionId;
+    private Lesson lesson;
 }

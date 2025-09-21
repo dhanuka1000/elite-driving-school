@@ -1,5 +1,6 @@
 package lk.ijse.elitedrivingschool.controller;
 
+import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -108,33 +109,32 @@ public class ManageStudentFromController {
     private static final Pattern DATE_PATTERN = Pattern.compile("^\\d{4}-\\d{2}-\\d{2}$");
     private static final Pattern STUDENT_ID_PATTERN = Pattern.compile("^S\\d{3,}$");
 
-//    private void setupLessonComboBox() {
-//        // Set up cell factory to display lesson information
-//        cmbLessonId.setCellFactory(param -> new ListCell<Lesson>() {
-//            @Override
-//            protected void updateItem(Lesson lesson, boolean empty) {
-//                super.updateItem(lesson, empty);
-//                if (empty || lesson == null) {
-//                    setText(null);
-//                } else {
-//                    setText(lesson.getLessonId() + " - " + lesson.getLessonName());
-//                }
-//            }
-//        });
-//
-//        cmbLessonId.setButtonCell(new ListCell<Lesson>() {
-//            @Override
-//            protected void updateItem(Lesson lesson, boolean empty) {
-//                super.updateItem(lesson, empty);
-//                if (empty || lesson == null) {
-//                    setText("Select Lesson");
-//                } else {
-//                    setText(lesson.getLessonId() + " - " + lesson.getLessonName());
-//                }
-//            }
-//        });
-//    }
-//
+    private void setupLessonComboBox() {
+        cmbLessonId.setCellFactory(param -> new ListCell<Lesson>() {
+            @Override
+            protected void updateItem(Lesson lesson, boolean empty) {
+                super.updateItem(lesson, empty);
+                if (empty || lesson == null) {
+                    setText(null);
+                } else {
+                    setText(lesson.getLessonId() + " - ");
+                }
+            }
+        });
+
+        cmbLessonId.setButtonCell(new ListCell<Lesson>() {
+            @Override
+            protected void updateItem(Lesson lesson, boolean empty) {
+                super.updateItem(lesson, empty);
+                if (empty || lesson == null) {
+                    setText("Select Lesson");
+                } else {
+                    setText(lesson.getLessonId() + " - ");
+                }
+            }
+        });
+    }
+
 //    private void loadLessons() {
 //        try {
 //            List<Lesson> lessons = lessonBO.getAllLessons();
@@ -234,6 +234,7 @@ public class ManageStudentFromController {
 
     public void initialize() {
 
+        setupLessonComboBox();
         setCellValueFactory();
         try {
             resetPage();
@@ -278,7 +279,7 @@ public class ManageStudentFromController {
                     dto.getPhone(),
                     dto.getEmail(),
                     dto.getAddress(),
-                    dto.getLessionId()
+                    dto.getLesson()
             ));
         }
     }
@@ -297,7 +298,10 @@ public class ManageStudentFromController {
         colContact.setCellValueFactory(new PropertyValueFactory<>("phone"));
         colBirthday.setCellValueFactory(new PropertyValueFactory<>("dob"));
         colAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
-        colLessonId.setCellValueFactory(new PropertyValueFactory<>("lession_id"));
+        colLessonId.setCellValueFactory(cellData -> {
+            Lesson lesson = cellData.getValue().getLesson();
+            return new SimpleStringProperty(lesson != null ? lesson.getLessonId() : "");
+        });
     }
 
     public void onClickTable(MouseEvent mouseEvent) {
@@ -312,8 +316,8 @@ public class ManageStudentFromController {
             txtdob.setText(String.valueOf(selectedItem.getDob()));
             txtAddress.setText(selectedItem.getAddress());
 
-//            Lesson selectedLesson = selectedItem.getLesson();
-//            cmbLessonId.getSelectionModel().select(selectedLesson);
+            Lesson selectedLesson = selectedItem.getLesson();
+            cmbLessonId.getSelectionModel().select(selectedLesson);
 
             btnAddPatient.setDisable(true);
             btnUpdatePatient.setDisable(false);

@@ -14,6 +14,7 @@ import lombok.*;
 public class Learning {
 
     @Id
+    @Column(name = "learning_id", length = 20)
     private String id;
 
     @ManyToOne(fetch = FetchType.LAZY)

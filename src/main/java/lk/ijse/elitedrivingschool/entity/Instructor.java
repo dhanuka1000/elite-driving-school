@@ -13,11 +13,10 @@ import java.util.List;
 @Entity
 @Table(name = "instructor")
 
-public class Instructor extends User {
+public class Instructor {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "instructor_id")
+    @Column(name = "instructor_id", nullable = false, length = 20)
     private String instructorId;
 
     @Column(name = "full_name", nullable = false)

@@ -11,19 +11,18 @@ import java.time.LocalDate;
 @ToString
 @Entity
 @Table(name = "enrolment")
-
 public class Enrolment {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "enrolment_id", nullable = false, length = 20)
     private String id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "student_id", referencedColumnName = "user_id")
+    @JoinColumn(name = "student_id", referencedColumnName = "student_id")  // FIXED: changed to "student_id"
     private Student student;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "course_id")
+    @JoinColumn(name = "course_id", referencedColumnName = "course_id")
     private Course course;
 
     @Column(name = "enrolment_date")

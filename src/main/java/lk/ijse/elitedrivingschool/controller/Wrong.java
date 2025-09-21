@@ -126,19 +126,19 @@ public class Wrong {
 
     private void loadTableData() throws SQLException, ClassNotFoundException {
 
-        tblStudent.getItems().clear();
-        List<StudentDTO> allStudents = studentBO.getAllStudents();
-        for (StudentDTO dto : allStudents) {
-            tblStudent.getItems().add(new StudentTM(
-                    dto.getStudentId(),
-                    dto.getFullName(),
-                    dto.getDob(),
-                    dto.getPhone(),
-                    dto.getEmail(),
-                    dto.getAddress(),
-                    dto.getLessionId()
-            ));
-        }
+//        tblStudent.getItems().clear();
+//        List<StudentDTO> allStudents = studentBO.getAllStudents();
+//        for (StudentDTO dto : allStudents) {
+//            tblStudent.getItems().add(new StudentTM(
+//                    dto.getStudentId(),
+//                    dto.getFullName(),
+//                    dto.getDob(),
+//                    dto.getPhone(),
+//                    dto.getEmail(),
+//                    dto.getAddress(),
+//                    dto.getLessionId()
+//            ));
+//        }
     }
 
     private void loadNextId() throws SQLException {

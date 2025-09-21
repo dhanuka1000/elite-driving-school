@@ -1,7 +1,6 @@
 package lk.ijse.elitedrivingschool.bo.custom;
 
 import lk.ijse.elitedrivingschool.bo.SuperBO;
-import lk.ijse.elitedrivingschool.dto.InstructorDTO;
 import lk.ijse.elitedrivingschool.dto.LessionDTO;
 
 import java.sql.SQLException;

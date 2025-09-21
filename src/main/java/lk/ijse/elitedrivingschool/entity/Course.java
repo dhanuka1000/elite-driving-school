@@ -15,8 +15,7 @@ import java.util.List;
 public class Course {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "course_id")
+    @Column(name = "course_id", nullable = false, length = 20)
     private String courseId;
 
     @Column(name = "name", nullable = false)
@@ -30,12 +29,4 @@ public class Course {
 
     @Column(name = "description")
     private String description;
-
-    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @ToString.Exclude
-    private List<Enrolment> enrolments = new ArrayList<>();
-
-    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @ToString.Exclude
-    private List<Lesson> lessons = new ArrayList<>();
 }

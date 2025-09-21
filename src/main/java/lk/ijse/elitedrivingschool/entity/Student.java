@@ -1,8 +1,10 @@
 package lk.ijse.elitedrivingschool.entity;
 
 import jakarta.persistence.*;
+import lk.ijse.elitedrivingschool.dto.LessionDTO;
 import lombok.*;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,8 +37,8 @@ public class Student {
     @Column(name = "address", length = 200)
     private String address;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "lesson_id", referencedColumnName = "lesson_id")
+    @ManyToOne
+    @JoinColumn(name = "les_id")
     private Lesson lesson;
 
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -47,13 +49,4 @@ public class Student {
     @ToString.Exclude
     private List<Payment> payments = new ArrayList<>();
 
-    public Student(String studentId, String fullName, String email, String phone, LocalDate dob, String address, Lesson lesson) {
-        this.studentId = studentId;
-        this.fullName = fullName;
-        this.email = email;
-        this.phone = phone;
-        this.dob = dob;
-        this.address = address;
-        this.lesson = lesson;
-    }
 }
