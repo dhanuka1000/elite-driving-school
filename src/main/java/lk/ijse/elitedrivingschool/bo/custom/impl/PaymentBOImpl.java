@@ -31,4 +31,9 @@ public class PaymentBOImpl implements PaymentBO {
     public String generateNewPaymentId() throws SQLException, ClassNotFoundException {
         return "";
     }
+
+    @Override
+    public String getNextId() throws SQLException {
+        return "";
+    }
 }

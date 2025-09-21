@@ -1,5 +1,6 @@
 package lk.ijse.elitedrivingschool.dto;
 
+import lk.ijse.elitedrivingschool.entity.Lesson;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -18,5 +19,6 @@ public class StudentDTO {
     private String phone;
     private LocalDate dob;
     private String address;
-    private String lessionId;
+    private Lesson lessionId;
+
 }

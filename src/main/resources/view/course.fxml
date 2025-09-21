@@ -14,9 +14,9 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.elitedrivingschool.controller.ManageCourseFromController">
    <children>
-      <AnchorPane layoutX="5.0" layoutY="7.0" prefHeight="425.0" prefWidth="600.0">
+      <AnchorPane layoutX="5.0" layoutY="7.0" prefHeight="425.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <VBox alignment="TOP_CENTER" layoutY="-8.0" prefHeight="400.0" prefWidth="400.0" style="-fx-background-color: #fff;" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-8.0">
+            <VBox alignment="TOP_CENTER" layoutX="1.8" layoutY="-8.0" prefHeight="400.0" prefWidth="400.0" style="-fx-background-color: #fff;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <Label alignment="CENTER" prefHeight="30.0" prefWidth="388.0" text="Course Management" textFill="#842626">
                      <font>

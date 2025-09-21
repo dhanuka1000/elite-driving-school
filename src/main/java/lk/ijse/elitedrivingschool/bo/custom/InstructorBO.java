@@ -14,4 +14,5 @@ public interface InstructorBO extends SuperBO {
     boolean updateInstructors(InstructorDTO instructorDTO) throws SQLException, ClassNotFoundException;
     boolean deleteInstructors(String id) throws SQLException, ClassNotFoundException;
     String generateNewInstructorId() throws SQLException, ClassNotFoundException;
+    String getNextId() throws SQLException;
 }

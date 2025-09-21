@@ -5,6 +5,7 @@ import lk.ijse.elitedrivingschool.entity.Student;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
 public class StudentDAOImpl implements StudentDAO {
     @Override
@@ -35,5 +36,10 @@ public class StudentDAOImpl implements StudentDAO {
     @Override
     public List<String> getAllIds() throws SQLException {
         return List.of();
+    }
+
+    @Override
+    public Optional<Student> findById(String id) throws SQLException {
+        return Optional.empty();
     }
 }

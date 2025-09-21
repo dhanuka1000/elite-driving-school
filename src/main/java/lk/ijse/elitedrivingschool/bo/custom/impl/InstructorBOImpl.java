@@ -31,4 +31,9 @@ public class InstructorBOImpl implements InstructorBO {
     public String generateNewInstructorId() throws SQLException, ClassNotFoundException {
         return "";
     }
+
+    @Override
+    public String getNextId() throws SQLException {
+        return "";
+    }
 }

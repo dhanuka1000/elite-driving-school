@@ -14,4 +14,5 @@ public interface LessonBO extends SuperBO {
     boolean updateLessons(LessionDTO lessionDTO) throws SQLException, ClassNotFoundException;
     boolean deleteLessons(String id) throws SQLException, ClassNotFoundException;
     String generateNewLessonId() throws SQLException, ClassNotFoundException;
+    String getNextId() throws SQLException;
 }

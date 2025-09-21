@@ -31,4 +31,9 @@ public class CourseBOImpl implements CourseBO {
     public String generateNewCourseId() throws SQLException, ClassNotFoundException {
         return "";
     }
+
+    @Override
+    public String getNextId() throws SQLException {
+        return "";
+    }
 }

@@ -31,4 +31,9 @@ public class UserBOImpl implements UserBO {
     public String generateNewUserId() throws SQLException, ClassNotFoundException {
         return "";
     }
+
+    @Override
+    public String getNextId() throws SQLException {
+        return "";
+    }
 }

@@ -14,4 +14,5 @@ public interface PaymentBO extends SuperBO {
     boolean updatePayments(PaymentDTO paymentDTO) throws SQLException, ClassNotFoundException;
     boolean deletePayments(String id) throws SQLException, ClassNotFoundException;
     String generateNewPaymentId() throws SQLException, ClassNotFoundException;
+    String getNextId() throws SQLException;
 }

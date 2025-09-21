@@ -2,6 +2,7 @@ package lk.ijse.elitedrivingschool.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,31 +11,33 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(callSuper = true)
+@ToString
 @Entity
 @Table(name = "student")
-
-public class Student extends User {
+public class Student {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "student_id")
+    @Column(name = "student_id", nullable = false, length = 20)
     private String studentId;
 
-    @Column(name = "full_name", nullable = false)
+    @Column(name = "full_name", nullable = false, length = 100)
     private String fullName;
 
-    @Column(name = "email", unique = true, nullable = false)
+    @Column(name = "email", unique = true, nullable = false, length = 100)
     private String email;
 
-    @Column(name = "phone")
+    @Column(name = "phone", length = 15)
     private String phone;
 
     @Column(name = "dob")
     private LocalDate dob;
 
-    @Column(name = "address")
+    @Column(name = "address", length = 200)
     private String address;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "lesson_id", referencedColumnName = "lesson_id")
+    private Lesson lesson;
 
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @ToString.Exclude
@@ -44,8 +47,13 @@ public class Student extends User {
     @ToString.Exclude
     private List<Payment> payments = new ArrayList<>();
 
-    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @ToString.Exclude
-    private List<Lesson> lessons = new ArrayList<>();
-
+    public Student(String studentId, String fullName, String email, String phone, LocalDate dob, String address, Lesson lesson) {
+        this.studentId = studentId;
+        this.fullName = fullName;
+        this.email = email;
+        this.phone = phone;
+        this.dob = dob;
+        this.address = address;
+        this.lesson = lesson;
+    }
 }

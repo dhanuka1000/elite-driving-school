@@ -31,4 +31,9 @@ public class LessionBOImpl implements LessonBO {
     public String generateNewLessonId() throws SQLException, ClassNotFoundException {
         return "";
     }
+
+    @Override
+    public String getNextId() throws SQLException {
+        return "";
+    }
 }

@@ -1,5 +1,6 @@
 package lk.ijse.elitedrivingschool.dto.tm;
 
+import lk.ijse.elitedrivingschool.entity.Lesson;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -14,9 +15,9 @@ public class StudentTM {
 
     private String studentId;
     private String fullName;
-    private String email;
-    private String phone;
     private LocalDate dob;
+    private String phone;
+    private String email;
     private String address;
-    private String lessionId;
+    private Lesson lessionId;
 }

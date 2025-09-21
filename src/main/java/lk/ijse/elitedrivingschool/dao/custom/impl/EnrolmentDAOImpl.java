@@ -36,4 +36,9 @@ public class EnrolmentDAOImpl implements EnrolmentDAO {
     public List<String> getAllIds() throws SQLException {
         return List.of();
     }
+
+    @Override
+    public boolean existsByStudentId(String id) {
+        return false;
+    }
 }

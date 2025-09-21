@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -14,7 +15,7 @@
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.elitedrivingschool.controller.ManageStudentFromController">
+<AnchorPane fx:id="ancParent" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.elitedrivingschool.controller.ManageStudentFromController">
    <children>
       <VBox alignment="TOP_CENTER" prefHeight="400.0" prefWidth="200.0" style="-fx-background-color: #dfe4ea;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -42,7 +43,7 @@
                   </LinearGradient>
                </textFill>
             </Label>
-            <Button fx:id="btnStudent" mnemonicParsing="false" onAction="#goPatientbtn" onMouseEntered="#PatientBtnIn" onMouseExited="#PatientBtnExit" style="-fx-background-color: #dfe4ea; -fx-background-radius: 15;" text="Student" textFill="#268e26">
+            <Button fx:id="btnStudent" mnemonicParsing="false" onAction="#goStudentbtn" onMouseEntered="#btnStudentIn" onMouseExited="#btnStudentOut" style="-fx-background-color: #dfe4ea; -fx-background-radius: 15;" text="Student" textFill="#268e26">
                <font>
                   <Font size="18.0" />
                </font>
@@ -50,7 +51,7 @@
                   <Insets top="40.0" />
                </VBox.margin>
             </Button>
-            <Button fx:id="btnCourse" mnemonicParsing="false" onAction="#goAppoinentbtn" onMouseEntered="#appointmentBtnIn" onMouseExited="#appointmentBtnExit" style="-fx-background-color: #dfe4ea;" text="Course" textFill="#268e26">
+            <Button fx:id="btnCourse" mnemonicParsing="false" onAction="#goCourseBtn" onMouseEntered="#btnCourseIn" onMouseExited="#btnCourseOut" style="-fx-background-color: #dfe4ea;" text="Course" textFill="#268e26">
                <font>
                   <Font size="18.0" />
                </font>
@@ -58,7 +59,7 @@
                   <Insets top="10.0" />
                </VBox.margin>
             </Button>
-            <Button fx:id="btnEnrolment" defaultButton="true" mnemonicParsing="false" onAction="#goBillBtn" onMouseEntered="#billinBtnIn" onMouseExited="#billingBtnExit" style="-fx-background-color: #dfe4ea;" text="Enrolment" textFill="#1d8110">
+            <Button fx:id="btnEnrolment" defaultButton="true" mnemonicParsing="false" onAction="#goEnrolmentBtn" onMouseEntered="#btnEnrolmentIn" onMouseExited="#btnEnrolmentOut" style="-fx-background-color: #dfe4ea;" text="Enrolment" textFill="#1d8110">
                <font>
                   <Font size="18.0" />
                </font>
@@ -66,7 +67,7 @@
                   <Insets top="10.0" />
                </VBox.margin>
             </Button>
-            <Button fx:id="btnInstructor" mnemonicParsing="false" onAction="#goItrmBtn" onMouseEntered="#itemBtnIn" onMouseExited="#itemBtnExit" style="-fx-background-color: #dfe4ea;" text="Instructor" textFill="#1d8110">
+            <Button fx:id="btnInstructor" mnemonicParsing="false" onAction="#goInstructorBtn" onMouseEntered="#btnInstructorIn" onMouseExited="#btnInstructorOut" style="-fx-background-color: #dfe4ea;" text="Instructor" textFill="#1d8110">
                <font>
                   <Font size="18.0" />
                </font>
@@ -74,17 +75,22 @@
                   <Insets top="10.0" />
                </VBox.margin>
             </Button>
-            <Button fx:id="btnPayment" defaultButton="true" mnemonicParsing="false" onAction="#goTestRBtn" onMouseEntered="#testResultBtnIn" onMouseExited="#testResultBtnExit" style="-fx-background-color: #dfe4ea;" text="Payment" textFill="#1d8110">
+            <Button fx:id="btnPayment" defaultButton="true" mnemonicParsing="false" onAction="#goPaymentBtn" onMouseEntered="#btnPaymentIn" onMouseExited="#btnPaymentOut" style="-fx-background-color: #dfe4ea;" text="Payment" textFill="#1d8110">
                <font>
                   <Font size="18.0" />
                </font>
                <VBox.margin>
                   <Insets top="10.0" />
                </VBox.margin>
+            </Button>
+            <Button fx:id="btnLesson" defaultButton="true" mnemonicParsing="false" onAction="#goLessonBtn" onMouseEntered="#btnLessontIn" onMouseExited="#btnLessonOut" style="-fx-background-color: #dfe4ea;" text="Lesson" textFill="#1d8110">
+               <font>
+                  <Font size="18.0" />
+               </font>
             </Button>
          </children>
       </VBox>
-      <AnchorPane layoutX="194.0" prefHeight="400.0" prefWidth="405.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <AnchorPane fx:id="ancChild" layoutX="194.0" prefHeight="400.0" prefWidth="405.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <VBox alignment="TOP_CENTER" layoutY="-3.0" prefHeight="493.0" prefWidth="513.0" style="-fx-background-color: #fff;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-113.0" AnchorPane.topAnchor="0.0">
                <children>
@@ -177,14 +183,14 @@
                         <Insets top="10.0" />
                      </VBox.margin>
                   </HBox>
-                  <HBox alignment="TOP_CENTER" prefHeight="32.0" prefWidth="579.0">
+                  <HBox alignment="TOP_CENTER">
                      <children>
-                        <Label prefWidth="150.0" text="Registration Date">
+                        <Label prefWidth="150.0" text="Lesson Id">
                            <font>
                               <Font size="14.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="txtRegistrationDate" prefHeight="26.0" prefWidth="314.0" style="-fx-background-color: #fff; -fx-border-color: #BB25B9; -fx-border-width: 0 0 2px 0;" />
+                        <ComboBox fx:id="cmbLessonId" prefWidth="315.0" style="-fx-border-color: #BB25B9; -fx-background-color: #fff; -fx-border-width: 0 0 2px 0;" />
                      </children>
                      <VBox.margin>
                         <Insets top="10.0" />
@@ -203,7 +209,7 @@
                         <Insets top="30.0" />
                      </VBox.margin>
                   </HBox>
-                  <TableView fx:id="tblStudent" prefHeight="200.0" prefWidth="200.0">
+                  <TableView fx:id="tblStudent" onMouseClicked="#onClickTable" prefHeight="200.0" prefWidth="200.0">
                     <columns>
                       <TableColumn fx:id="colStudentId" prefWidth="75.0" text="Student Id" />
                       <TableColumn fx:id="colName" prefWidth="75.0" text="Name" />
@@ -211,7 +217,7 @@
                         <TableColumn fx:id="colContact" prefWidth="75.0" text="Contact" />
                         <TableColumn fx:id="colEmail" prefWidth="75.0" text="E-Mail" />
                         <TableColumn fx:id="colAddress" prefWidth="75.0" text="Address" />
-                        <TableColumn fx:id="colRegistrationDate" prefWidth="75.0" text="Registration Date" />
+                        <TableColumn fx:id="colLessonId" prefWidth="75.0" text="Lesson Id" />
                     </columns>
                      <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
