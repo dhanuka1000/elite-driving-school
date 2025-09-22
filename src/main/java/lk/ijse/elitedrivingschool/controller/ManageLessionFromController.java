@@ -11,15 +11,13 @@ import lk.ijse.elitedrivingschool.bo.custom.LessonBO;
 import lk.ijse.elitedrivingschool.dto.LessionDTO;
 import lk.ijse.elitedrivingschool.dto.tm.LessionTm;
 
-import java.sql.SQLException;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
 public class ManageLessionFromController {
 
     public TextField txtTime;
-    public TableColumn colTime;
     @FXML
     private Button btnAdd;
 
@@ -33,7 +31,7 @@ public class ManageLessionFromController {
     private TableColumn<LessionTm, String> colDate;
 
     @FXML
-    private TableColumn<LessionTm, String> colDuration;
+    private TableColumn<LessionTm, String> colName;
 
     @FXML
     private TableColumn<LessionTm, String> colId;
@@ -42,7 +40,7 @@ public class ManageLessionFromController {
     private TableColumn<LessionTm, String> colLocation;
 
     @FXML
-    private TableColumn<LessionTm, String> colStatus;
+    private TableColumn<LessionTm, String> colTime;
 
     @FXML
     private TableView<LessionTm> tblLesson;
@@ -51,16 +49,13 @@ public class ManageLessionFromController {
     private TextField txtDate;
 
     @FXML
-    private TextField txtDuration;
+    private TextField txtName;
 
     @FXML
     private TextField txtId;
 
     @FXML
     private TextField txtLocation;
-
-    @FXML
-    private TextField txtStatus;
 
     private LessonBO lessonBO = (LessonBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.LESSON);
 
@@ -70,16 +65,42 @@ public class ManageLessionFromController {
 
     public void initialize() {
         setCellValueFactory();
-        loadTableData();
-        loadNextId();
+        resetPage();
+//        try {
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            new Alert(Alert.AlertType.ERROR, "Something went wrong, please try again").show();
+//        }
+    }
+
+    private void resetPage() {
+
+        try {
+            loadTableData();
+            loadNextId();
+
+            btnAdd.setDisable(false);
+            btnDelete.setDisable(true);
+            btnUpdate.setDisable(true);
+
+            txtTime.setText("");
+            txtName.setText("");
+            txtDate.setText("");
+            txtLocation.setText("");
+
+        }catch (Exception e){
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Something went wrong, please try again").show();
+        }
     }
 
     private void setCellValueFactory() {
         colId.setCellValueFactory(new PropertyValueFactory<>("lessionId"));
+        colName.setCellValueFactory(new PropertyValueFactory<>("name"));
         colDate.setCellValueFactory(new PropertyValueFactory<>("date"));
-        colDuration.setCellValueFactory(new PropertyValueFactory<>("duration"));
+        colTime.setCellValueFactory(new PropertyValueFactory<>("time"));
         colLocation.setCellValueFactory(new PropertyValueFactory<>("location"));
-        colStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
     }
 
     private void loadTableData() {
@@ -88,11 +109,10 @@ public class ManageLessionFromController {
             for (LessionDTO dto : lessonBO.getAllLessons()) {
                 obList.add(new LessionTm(
                         dto.getLessionId(),
+                        dto.getName(),
                         dto.getDate(),
-                        dto.getDuration(),
-                        dto.getLocation(),
-                        dto.getStatus(),
-                        dto.getInstructorId()
+                        dto.getTime(),
+                        dto.getLocation()
                 ));
             }
             tblLesson.setItems(obList);
@@ -116,14 +136,6 @@ public class ManageLessionFromController {
             showError("Invalid Lesson ID format. Should be L followed by 3 digits (e.g., L001)");
             return false;
         }
-        if (!DURATION_PATTERN.matcher(txtDuration.getText()).matches()) {
-            showError("Invalid duration format. Example: '2 hours' or '1.5 hrs'");
-            return false;
-        }
-        if (!STATUS_PATTERN.matcher(txtStatus.getText()).matches()) {
-            showError("Status must be: Scheduled, Completed, or Cancelled");
-            return false;
-        }
         if (txtLocation.getText().trim().isEmpty()) {
             showError("Location cannot be empty");
             return false;
@@ -141,9 +153,9 @@ public class ManageLessionFromController {
 
     private void clearFields() {
         txtDate.clear();
-        txtDuration.clear();
+        txtName.clear();
         txtLocation.clear();
-        txtStatus.clear();
+        txtTime.clear();
         loadNextId();
     }
 
@@ -154,12 +166,11 @@ public class ManageLessionFromController {
         try {
             LessionDTO dto = new LessionDTO(
                     txtId.getText(),
-                    LocalDateTime.parse(txtDate.getText()),
-                    txtDuration.getText(),
-                    txtLocation.getText(),
-                    txtStatus.getText(),
-                    null // instructorId would be set from another control
-            );
+                    txtName.getText(),
+                    LocalDate.parse(txtDate.getText()),
+                    txtTime.getText(),
+                    txtLocation.getText()
+                        );
 
             if (lessonBO.saveLessons(dto)) {
                 showSuccess("Lesson saved successfully!");
@@ -209,11 +220,10 @@ public class ManageLessionFromController {
         try {
             LessionDTO dto = new LessionDTO(
                     txtId.getText(),
-                    LocalDateTime.parse(txtDate.getText()),
-                    txtDuration.getText(),
-                    txtLocation.getText(),
-                    txtStatus.getText(),
-                    null // instructorId would be set from another control
+                    txtName.getText(),
+                    LocalDate.parse(txtDate.getText()),
+                    txtTime.getText(),
+                    txtLocation.getText()
             );
 
             if (lessonBO.updateLessons(dto)) {
@@ -234,10 +244,14 @@ public class ManageLessionFromController {
         LessionTm selected = tblLesson.getSelectionModel().getSelectedItem();
         if (selected != null) {
             txtId.setText(selected.getLessionId());
+            txtName.setText(selected.getName());
             txtDate.setText(selected.getDate().toString());
-            txtDuration.setText(selected.getDuration());
+            txtTime.setText(selected.getTime());
             txtLocation.setText(selected.getLocation());
-            txtStatus.setText(selected.getStatus());
+
+            btnAdd.setDisable(true);
+            btnDelete.setDisable(false);
+            btnUpdate.setDisable(false);
         }
     }
 }

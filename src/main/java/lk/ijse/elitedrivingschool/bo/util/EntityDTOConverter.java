@@ -25,21 +25,21 @@ public class EntityDTOConverter {
     public LessionDTO getLessonDTO(Lesson lesson) {
         return new LessionDTO(
                 lesson.getLessonId(),
+                lesson.getName(),
                 lesson.getDate(),
-                lesson.getDuration(),
-                lesson.getLocation(),
-                lesson.getStatus(),
-                lesson.getInstructor() != null ? lesson.getInstructor().getInstructorId() : null
+                lesson.getTime(),
+                lesson.getLocation()
         );
     }
 
     public Lesson getLesson(LessionDTO dto) {
         Lesson lesson = new Lesson();
+
         lesson.setLessonId(dto.getLessionId());
+        lesson.setName(dto.getName());
         lesson.setDate(dto.getDate());
-        lesson.setDuration(dto.getDuration());
+        lesson.setTime(dto.getTime());
         lesson.setLocation(dto.getLocation());
-        lesson.setStatus(dto.getStatus());
         return lesson;
     }
 

@@ -2,6 +2,8 @@ package lk.ijse.elitedrivingschool.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
@@ -17,17 +19,17 @@ public class Lesson {
     @Column(name = "lesson_id", nullable = false, length = 20)
     private String lessonId;
 
-    @Column(name = "date", nullable = false)
-    private LocalDateTime date;
+    @Column(name = "name", nullable = false, length = 1000)
+    private String name;
 
-    @Column(name = "duration", nullable = false, length = 50)
-    private String duration;
+    @Column(name = "date", nullable = false)
+    private LocalDate date;
+
+    @Column(name = "time", nullable = false, length = 20)
+    private String time;
 
     @Column(name = "location", nullable = false, length = 100)
     private String location;
-
-    @Column(name = "status", nullable = false, length = 20)
-    private String status;
 
     @ManyToOne
     @JoinColumn(name = "course_id")

@@ -45,8 +45,12 @@ public class LessonDAOImpl implements LessonDAO {
             transaction.commit();
             return true;
         } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
+            if (transaction != null && transaction.getStatus().canRollback()) {
+                try {
+                    transaction.rollback();
+                } catch (Exception rollbackEx) {
+                    rollbackEx.printStackTrace();
+                }
             }
             throw new SQLException("Failed to save lesson", e);
         }
@@ -61,8 +65,12 @@ public class LessonDAOImpl implements LessonDAO {
             transaction.commit();
             return true;
         } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
+            if (transaction != null && transaction.getStatus().canRollback()) {
+                try {
+                    transaction.rollback();
+                } catch (Exception rollbackEx) {
+                    rollbackEx.printStackTrace();
+                }
             }
             throw new SQLException("Failed to update lesson", e);
         }
@@ -81,8 +89,12 @@ public class LessonDAOImpl implements LessonDAO {
             }
             return false;
         } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
+            if (transaction != null && transaction.getStatus().canRollback()) {
+                try {
+                    transaction.rollback();
+                } catch (Exception rollbackEx) {
+                    rollbackEx.printStackTrace();
+                }
             }
             throw new SQLException("Failed to delete lesson", e);
         }
