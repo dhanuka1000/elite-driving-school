@@ -40,65 +40,36 @@ public class StudentDAOImpl implements StudentDAO {
     @Override
     public boolean save(Student student) throws SQLException {
         Transaction transaction = null;
-        Session session = null;
-        try {
-            session = FactoryConfiguration.getInstance().getSession();
-
-            TransactionManagement.beginTransaction();
-
+        try (Session session = FactoryConfiguration.getInstance().getSession()) {
             transaction = session.beginTransaction();
+
             session.persist(student);
+
             transaction.commit();
-
-            TransactionManagement.commitTransaction();
             return true;
-
         } catch (Exception e) {
             if (transaction != null && transaction.isActive()) {
                 transaction.rollback();
             }
-            try {
-                TransactionManagement.rollbackTransaction();
-            } catch (SQLException ex) {
-                System.err.println("Failed to rollback transaction: " + ex.getMessage());
-            }
             throw new SQLException("Failed to save student", e);
-        } finally {
-            if (session != null && session.isOpen()) {
-                session.close();
-            }
         }
     }
 
     @Override
     public boolean update(Student student) throws SQLException {
         Transaction transaction = null;
-        Session session = null;
-        try {
-            session = FactoryConfiguration.getInstance().getSession();
-            TransactionManagement.beginTransaction();
-
+        try (Session session = FactoryConfiguration.getInstance().getSession()) {
             transaction = session.beginTransaction();
+
             session.merge(student);
+
             transaction.commit();
-
-            TransactionManagement.commitTransaction();
             return true;
-
         } catch (Exception e) {
             if (transaction != null && transaction.isActive()) {
                 transaction.rollback();
             }
-            try {
-                TransactionManagement.rollbackTransaction();
-            } catch (SQLException ex) {
-                System.err.println("Failed to rollback transaction: " + ex.getMessage());
-            }
             throw new SQLException("Failed to update student", e);
-        } finally {
-            if (session != null && session.isOpen()) {
-                session.close();
-            }
         }
     }
 

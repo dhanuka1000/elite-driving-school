@@ -1,10 +1,8 @@
 package lk.ijse.elitedrivingschool.entity;
 
 import jakarta.persistence.*;
-import lk.ijse.elitedrivingschool.dto.LessionDTO;
 import lombok.*;
 
-import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;

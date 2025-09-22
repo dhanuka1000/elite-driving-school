@@ -1,14 +1,19 @@
 package lk.ijse.elitedrivingschool.bo.util;
 
+import lk.ijse.elitedrivingschool.dao.DAOFactory;
+import lk.ijse.elitedrivingschool.dao.DAOTypes;
+import lk.ijse.elitedrivingschool.dao.custom.LessonDAO;
 import lk.ijse.elitedrivingschool.dto.LessionDTO;
 import lk.ijse.elitedrivingschool.dto.StudentDTO;
 import lk.ijse.elitedrivingschool.entity.Lesson;
 import lk.ijse.elitedrivingschool.entity.Student;
 
-import java.util.ArrayList;
-import java.util.stream.Collectors;
+import java.sql.SQLException;
+import java.util.Optional;
 
 public class EntityDTOConverter {
+
+    private final LessonDAO lessonDAO = DAOFactory.getInstance().getDAO(DAOTypes.LESSON);
 
     public StudentDTO getStudentDTO(Student student) {
         return new StudentDTO(
@@ -18,7 +23,7 @@ public class EntityDTOConverter {
                 student.getPhone(),
                 student.getDob(),
                 student.getAddress(),
-                student.getLesson()
+                student.getLesson() != null ? student.getLesson().getLessonId() : null
         );
     }
 
@@ -34,7 +39,6 @@ public class EntityDTOConverter {
 
     public Lesson getLesson(LessionDTO dto) {
         Lesson lesson = new Lesson();
-
         lesson.setLessonId(dto.getLessionId());
         lesson.setName(dto.getName());
         lesson.setDate(dto.getDate());
@@ -43,16 +47,24 @@ public class EntityDTOConverter {
         return lesson;
     }
 
-    public Student getStudent(StudentDTO dto) {
+    public Student getStudent(StudentDTO dto) throws SQLException, ClassNotFoundException {
         Student student = new Student();
-        Lesson lesson = new Lesson();
         student.setStudentId(dto.getStudentId());
         student.setFullName(dto.getFullName());
         student.setEmail(dto.getEmail());
         student.setPhone(dto.getPhone());
         student.setDob(dto.getDob());
         student.setAddress(dto.getAddress());
-        student.setLesson(dto.getLesson());
+
+        // Convert lessonId (String) to Lesson entity
+        if (dto.getLesson() != null) {
+            Optional<Lesson> lessonOptional = lessonDAO.findById(dto.getLesson());
+            if (lessonOptional.isPresent()) {
+                student.setLesson(lessonOptional.get());
+            } else {
+                throw new SQLException("Lesson not found with ID: " + dto.getLesson());
+            }
+        }
         return student;
     }
 }

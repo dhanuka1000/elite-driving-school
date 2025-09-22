@@ -1,6 +1,7 @@
 package lk.ijse.elitedrivingschool.controller;
 
 import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -58,7 +59,7 @@ public class ManageStudentFromController {
     private Button btnUpdatePatient;
 
     @FXML
-    private ComboBox<Lesson> cmbLessonId;
+    private ComboBox<String> cmbLessonId;
 
     @FXML
     private TableColumn<StudentTM, String> colAddress;
@@ -108,44 +109,6 @@ public class ManageStudentFromController {
     private static final Pattern ADDRESS_PATTERN = Pattern.compile("^[A-Za-z0-9\\s.,-]{5,100}$");
     private static final Pattern DATE_PATTERN = Pattern.compile("^\\d{4}-\\d{2}-\\d{2}$");
     private static final Pattern STUDENT_ID_PATTERN = Pattern.compile("^S\\d{3,}$");
-
-    private void setupLessonComboBox() {
-        cmbLessonId.setCellFactory(param -> new ListCell<Lesson>() {
-            @Override
-            protected void updateItem(Lesson lesson, boolean empty) {
-                super.updateItem(lesson, empty);
-                if (empty || lesson == null) {
-                    setText(null);
-                } else {
-                    setText(lesson.getLessonId() + " - ");
-                }
-            }
-        });
-
-        cmbLessonId.setButtonCell(new ListCell<Lesson>() {
-            @Override
-            protected void updateItem(Lesson lesson, boolean empty) {
-                super.updateItem(lesson, empty);
-                if (empty || lesson == null) {
-                    setText("Select Lesson");
-                } else {
-                    setText(lesson.getLessonId() + " - ");
-                }
-            }
-        });
-    }
-
-//    private void loadLessons() {
-//        try {
-//            List<Lesson> lessons = lessonBO.getAllLessons();
-//            cmbLessonId.getItems().clear();
-//            cmbLessonId.getItems().addAll(lessons);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            showError("Failed to load lessons: " + e.getMessage());
-//        }
-//    }
-
 
     private boolean validateName() {
         String name = txtStudentName.getText().trim();
@@ -199,21 +162,20 @@ public class ManageStudentFromController {
         return true;
     }
 
-    private boolean validateLessonId() {
-        Lesson selectedLesson = cmbLessonId.getSelectionModel().getSelectedItem();
-        if (selectedLesson == null) {
-            showError("Please select a lesson");
-            return false;
-        }
-        return true;
-    }
+//    private boolean validateLessonId() {
+//        Lesson selectedLesson = cmbLessonId.getSelectionModel().getSelectedItem();
+//        if (selectedLesson == null) {
+//            showError("Please select a lesson");
+//            return false;
+//        }
+//        return true;
+//    }
 
     private boolean validateAllFields() {
         return  validateName() &&
                 validateEmail() &&
                 validatePhone() &&
-                validateAddress() &&
-                validateLessonId();
+                validateAddress();
     }
 
     private void showError(String message) {
@@ -234,7 +196,7 @@ public class ManageStudentFromController {
 
     public void initialize() {
 
-        setupLessonComboBox();
+//        setupLessonComboBox();
         setCellValueFactory();
         try {
             resetPage();
@@ -244,11 +206,23 @@ public class ManageStudentFromController {
         }
     }
 
+    private void loadLessonIds() {
+        try {
+            List<String> lessonIds = lessonBO.getAllLessonIds();
+            cmbLessonId.getItems().clear();
+            cmbLessonId.getItems().addAll(lessonIds);
+        } catch (SQLException | ClassNotFoundException e) {
+            new Alert(Alert.AlertType.ERROR, "Failed to load lesson IDs").show();
+            e.printStackTrace();
+        }
+    }
+
     private void resetPage() {
 
         try {
             loadTableData();
             loadNextId();
+            loadLessonIds();
 
             btnAddPatient.setDisable(false);
             btnUpdatePatient.setDisable(true);
@@ -292,16 +266,13 @@ public class ManageStudentFromController {
 
     private void setCellValueFactory() {
 
-        colStudentId.setCellValueFactory(new PropertyValueFactory<>("student_id"));
-        colName.setCellValueFactory(new PropertyValueFactory<>("full_name"));
+        colStudentId.setCellValueFactory(new PropertyValueFactory<>("studentId"));
+        colName.setCellValueFactory(new PropertyValueFactory<>("fullName"));
         colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
         colContact.setCellValueFactory(new PropertyValueFactory<>("phone"));
         colBirthday.setCellValueFactory(new PropertyValueFactory<>("dob"));
         colAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
-        colLessonId.setCellValueFactory(cellData -> {
-            Lesson lesson = cellData.getValue().getLesson();
-            return new SimpleStringProperty(lesson != null ? lesson.getLessonId() : "");
-        });
+        colLessonId.setCellValueFactory(new PropertyValueFactory<>("lesson"));
     }
 
     public void onClickTable(MouseEvent mouseEvent) {
@@ -315,9 +286,7 @@ public class ManageStudentFromController {
             txtContact.setText(selectedItem.getPhone());
             txtdob.setText(String.valueOf(selectedItem.getDob()));
             txtAddress.setText(selectedItem.getAddress());
-
-            Lesson selectedLesson = selectedItem.getLesson();
-            cmbLessonId.getSelectionModel().select(selectedLesson);
+            cmbLessonId.setValue(String.valueOf(selectedItem.getLesson()));
 
             btnAddPatient.setDisable(true);
             btnUpdatePatient.setDisable(false);
@@ -338,10 +307,10 @@ public class ManageStudentFromController {
         String contact = txtContact.getText().trim();
         String email = txtEmail.getText().trim();
         String address = txtAddress.getText().trim();
-        Lesson lessionId = cmbLessonId.getSelectionModel().getSelectedItem();
+        String lessonId = cmbLessonId.getSelectionModel().getSelectedItem();
 
         try {
-            boolean isSaved = studentBO.saveStudents(new StudentDTO(studentId, name, email, contact, dob, address, lessionId));
+            boolean isSaved = studentBO.saveStudents(new StudentDTO(studentId, name, email, contact, dob, address, lessonId));
 
             if (isSaved) {
                 showSuccess("Student added successfully!");
@@ -369,7 +338,7 @@ public class ManageStudentFromController {
         String contact = txtContact.getText().trim();
         String email = txtEmail.getText().trim();
         String address = txtAddress.getText().trim();
-        Lesson lessonId = cmbLessonId.getValue();
+        String lessonId = cmbLessonId.getValue();
 
         try {
             boolean isUpdated = studentBO.updateStudents(new StudentDTO(studentId, name, email,  contact, dob, address, lessonId));

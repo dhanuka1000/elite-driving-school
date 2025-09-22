@@ -9,6 +9,7 @@ import java.util.ArrayList;
 public interface LessonBO extends SuperBO {
 
     ArrayList<LessionDTO> getAllLessons() throws SQLException, ClassNotFoundException;
+    ArrayList<String> getAllLessonIds() throws SQLException, ClassNotFoundException;
     boolean saveLessons(LessionDTO lessionDTO) throws SQLException, ClassNotFoundException;
     boolean updateLessons(LessionDTO lessionDTO) throws SQLException, ClassNotFoundException;
     boolean deleteLessons(String id) throws SQLException, ClassNotFoundException;
