@@ -25,6 +25,8 @@ import java.util.regex.Pattern;
 public class ManageStudentFromController {
 
     public Button btnLesson;
+    public Button btnUser;
+
     StudentBO studentBO =(StudentBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.STUDENT);
     LessonBO lessonBO = (LessonBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.LESSON);
 
@@ -162,15 +164,6 @@ public class ManageStudentFromController {
         return true;
     }
 
-//    private boolean validateLessonId() {
-//        Lesson selectedLesson = cmbLessonId.getSelectionModel().getSelectedItem();
-//        if (selectedLesson == null) {
-//            showError("Please select a lesson");
-//            return false;
-//        }
-//        return true;
-//    }
-
     private boolean validateAllFields() {
         return  validateName() &&
                 validateEmail() &&
@@ -196,7 +189,6 @@ public class ManageStudentFromController {
 
     public void initialize() {
 
-//        setupLessonComboBox();
         setCellValueFactory();
         try {
             resetPage();
@@ -536,5 +528,17 @@ public class ManageStudentFromController {
     public void btnLessonOut(MouseEvent mouseEvent) {
 
         mouseExit(btnLesson);
+    }
+
+    public void goUserBtn(ActionEvent actionEvent) {
+        navigateTo("view/user.fxml");
+    }
+
+    public void btnUserIn(MouseEvent mouseEvent) {
+        mouseEnter(btnUser);
+    }
+
+    public void btnUserOut(MouseEvent mouseEvent) {
+        mouseExit(btnUser);
     }
 }

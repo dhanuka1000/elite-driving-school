@@ -66,12 +66,6 @@ public class ManageLessionFromController {
     public void initialize() {
         setCellValueFactory();
         resetPage();
-//        try {
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            new Alert(Alert.AlertType.ERROR, "Something went wrong, please try again").show();
-//        }
     }
 
     private void resetPage() {
@@ -151,14 +145,6 @@ public class ManageLessionFromController {
         new Alert(Alert.AlertType.INFORMATION, message).show();
     }
 
-    private void clearFields() {
-        txtDate.clear();
-        txtName.clear();
-        txtLocation.clear();
-        txtTime.clear();
-        loadNextId();
-    }
-
     @FXML
     void addPatientBtn(ActionEvent event) {
         if (!validateFields()) return;
@@ -174,7 +160,6 @@ public class ManageLessionFromController {
 
             if (lessonBO.saveLessons(dto)) {
                 showSuccess("Lesson saved successfully!");
-                clearFields();
                 loadTableData();
             } else {
                 showError("Failed to save lesson");
@@ -201,7 +186,6 @@ public class ManageLessionFromController {
             try {
                 if (lessonBO.deleteLessons(lessonId)) {
                     showSuccess("Lesson deleted successfully!");
-                    clearFields();
                     loadTableData();
                 } else {
                     showError("Failed to delete lesson");
@@ -228,7 +212,6 @@ public class ManageLessionFromController {
 
             if (lessonBO.updateLessons(dto)) {
                 showSuccess("Lesson updated successfully!");
-                clearFields();
                 loadTableData();
             } else {
                 showError("Failed to update lesson");

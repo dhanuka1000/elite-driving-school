@@ -88,6 +88,11 @@
                   <Font size="18.0" />
                </font>
             </Button>
+            <Button fx:id="btnUser" defaultButton="true" mnemonicParsing="false" onAction="#goUserBtn" onMouseEntered="#btnUserIn" onMouseExited="#btnUserOut" style="-fx-background-color: #dfe4ea;" text="User" textFill="#1d8110">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
          </children>
       </VBox>
       <AnchorPane fx:id="ancChild" layoutX="194.0" prefHeight="400.0" prefWidth="405.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">

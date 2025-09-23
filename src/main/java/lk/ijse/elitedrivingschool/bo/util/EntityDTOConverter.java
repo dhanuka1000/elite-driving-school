@@ -5,8 +5,10 @@ import lk.ijse.elitedrivingschool.dao.DAOTypes;
 import lk.ijse.elitedrivingschool.dao.custom.LessonDAO;
 import lk.ijse.elitedrivingschool.dto.LessionDTO;
 import lk.ijse.elitedrivingschool.dto.StudentDTO;
+import lk.ijse.elitedrivingschool.dto.UserDTO;
 import lk.ijse.elitedrivingschool.entity.Lesson;
 import lk.ijse.elitedrivingschool.entity.Student;
+import lk.ijse.elitedrivingschool.entity.User;
 
 import java.sql.SQLException;
 import java.util.Optional;
@@ -56,7 +58,6 @@ public class EntityDTOConverter {
         student.setDob(dto.getDob());
         student.setAddress(dto.getAddress());
 
-        // Convert lessonId (String) to Lesson entity
         if (dto.getLesson() != null) {
             Optional<Lesson> lessonOptional = lessonDAO.findById(dto.getLesson());
             if (lessonOptional.isPresent()) {
@@ -66,5 +67,23 @@ public class EntityDTOConverter {
             }
         }
         return student;
+    }
+
+    public UserDTO getUserDTO(User user) {
+        return new UserDTO(
+                user.getUserId(),
+                user.getUserName(),
+                user.getPassword(),
+                user.getRole()
+        );
+    }
+
+    public User getUser(UserDTO dto) {
+        User user = new User();
+        user.setUserId(dto.getUserId());
+        user.setUserName(dto.getUserName());
+        user.setPassword(dto.getPassword());
+        user.setRole(dto.getRole());
+        return user;
     }
 }
