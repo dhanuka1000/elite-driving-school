@@ -7,6 +7,7 @@ import lk.ijse.elitedrivingschool.dto.StudentDTO;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 public interface StudentBO extends SuperBO {
 
@@ -16,4 +17,5 @@ public interface StudentBO extends SuperBO {
     boolean deleteStudents(String id) throws SQLException, ClassNotFoundException, InUseException;
     String generateNewStudentId() throws SQLException, ClassNotFoundException;
     String getNextId() throws SQLException;
+    ArrayList<String> getAllStudentsIds() throws SQLException, ClassNotFoundException;
 }

@@ -13,9 +13,10 @@ import java.time.LocalDate;
 public class PaymentDTO {
 
     private String paymentId;
-    private Double amount;
-    private LocalDate paymentDate;
+    private String amount;
+    private String paymentDate;
     private String paymentMethod;
     private String status;
     private String studentId;
+
 }

@@ -15,7 +15,7 @@ public class StudentTM {
 
     private String studentId;
     private String fullName;
-    private LocalDate dob;
+    private String dob;
     private String phone;
     private String email;
     private String address;

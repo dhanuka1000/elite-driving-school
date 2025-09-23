@@ -25,7 +25,7 @@ public class Course {
     private String duration;
 
     @Column(name = "fee", nullable = false)
-    private Double fee;
+    private String fee;
 
     @Column(name = "description")
     private String description;

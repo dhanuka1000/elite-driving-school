@@ -203,7 +203,6 @@
                   </HBox>
                   <HBox alignment="TOP_CENTER" prefHeight="32.0" prefWidth="889.0">
                      <children>
-                        <Button fx:id="btnAddPatient" mnemonicParsing="false" onAction="#addPatientBtn" prefWidth="100.0" style="-fx-background-color: #26DE81;" text="Save" textFill="WHITE" />
                         <Label text="   " />
                         <Button fx:id="btnUpdatePatient" mnemonicParsing="false" onAction="#updatePatientBtn" prefWidth="100.0" style="-fx-background-color: #2D98DA;" text="Update" textFill="WHITE" />
                         <Label text="   " />

@@ -18,10 +18,10 @@ public class Payment {
     private String paymentId;
 
     @Column(name = "amount", nullable = false)
-    private Double amount;
+    private String amount;
 
     @Column(name = "payment_date")
-    private LocalDate paymentDate;
+    private String paymentDate;
 
     @Column(name = "payment_method")
     private String paymentMethod;

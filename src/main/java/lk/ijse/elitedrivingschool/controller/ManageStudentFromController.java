@@ -1,7 +1,5 @@
 package lk.ijse.elitedrivingschool.controller;
 
-import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,7 +12,6 @@ import lk.ijse.elitedrivingschool.bo.custom.LessonBO;
 import lk.ijse.elitedrivingschool.bo.custom.StudentBO;
 import lk.ijse.elitedrivingschool.dto.StudentDTO;
 import lk.ijse.elitedrivingschool.dto.tm.StudentTM;
-import lk.ijse.elitedrivingschool.entity.Lesson;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -216,7 +213,7 @@ public class ManageStudentFromController {
             loadNextId();
             loadLessonIds();
 
-            btnAddPatient.setDisable(false);
+            //btnAddPatient.setDisable(false);
             btnUpdatePatient.setDisable(true);
             btnDeletePatient.setDisable(true);
 
@@ -280,7 +277,7 @@ public class ManageStudentFromController {
             txtAddress.setText(selectedItem.getAddress());
             cmbLessonId.setValue(String.valueOf(selectedItem.getLesson()));
 
-            btnAddPatient.setDisable(true);
+            //btnAddPatient.setDisable(true);
             btnUpdatePatient.setDisable(false);
             btnDeletePatient.setDisable(false);
         }
@@ -295,7 +292,7 @@ public class ManageStudentFromController {
 
         String studentId = txtStudentId.getText().trim();
         String name = txtStudentName.getText().trim();
-        LocalDate dob = LocalDate.parse(txtdob.getText().trim());
+        String dob = txtdob.getText().trim();
         String contact = txtContact.getText().trim();
         String email = txtEmail.getText().trim();
         String address = txtAddress.getText().trim();
@@ -326,7 +323,7 @@ public class ManageStudentFromController {
 
         String studentId = txtStudentId.getText().trim();
         String name = txtStudentName.getText().trim();
-        LocalDate dob = LocalDate.parse(txtdob.getText().trim());
+        String dob = txtdob.getText();
         String contact = txtContact.getText().trim();
         String email = txtEmail.getText().trim();
         String address = txtAddress.getText().trim();

@@ -3,6 +3,7 @@ package lk.ijse.elitedrivingschool.bo.util;
 import lk.ijse.elitedrivingschool.dao.DAOFactory;
 import lk.ijse.elitedrivingschool.dao.DAOTypes;
 import lk.ijse.elitedrivingschool.dao.custom.LessonDAO;
+import lk.ijse.elitedrivingschool.dao.custom.StudentDAO;
 import lk.ijse.elitedrivingschool.dto.*;
 import lk.ijse.elitedrivingschool.entity.*;
 
@@ -12,6 +13,7 @@ import java.util.Optional;
 public class EntityDTOConverter {
 
     private final LessonDAO lessonDAO = DAOFactory.getInstance().getDAO(DAOTypes.LESSON);
+    private final StudentDAO studentDAO = DAOFactory.getInstance().getDAO(DAOTypes.STUDENT);
 
     public StudentDTO getStudentDTO(Student student) {
         return new StudentDTO(
@@ -121,5 +123,36 @@ public class EntityDTOConverter {
         course.setFee(dto.getFee());
         course.setDescription(dto.getDescription());
         return course;
+    }
+
+    public PaymentDTO getPaymentDTO(Payment payment) {
+        return new PaymentDTO(
+                payment.getPaymentId(),
+                payment.getAmount(),
+                payment.getPaymentDate(),
+                payment.getPaymentMethod(),
+                payment.getStatus(),
+                payment.getStudent() != null ? payment.getStudent().getStudentId() : null
+        );
+    }
+
+    public Payment getPayment(PaymentDTO dto) throws SQLException, ClassNotFoundException {
+
+        Payment payment = new Payment();
+        payment.setPaymentId(dto.getPaymentId());
+        payment.setAmount(dto.getAmount());
+        payment.setPaymentDate(dto.getPaymentDate());
+        payment.setPaymentMethod(dto.getPaymentMethod());
+        payment.setStatus(dto.getStatus());
+
+        if (dto.getStudentId() != null) {
+            Optional<Student> studentOptional = studentDAO.findById(dto.getStudentId());
+            if (studentOptional.isPresent()) {
+                payment.setStudent(studentOptional.get());
+            } else {
+                throw new SQLException("Lesson not found with ID: " + dto.getStudentId());
+            }
+        }
+        return payment;
     }
 }

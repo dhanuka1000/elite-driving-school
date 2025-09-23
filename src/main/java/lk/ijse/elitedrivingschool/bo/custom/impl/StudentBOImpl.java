@@ -45,6 +45,7 @@ public class StudentBOImpl implements StudentBO {
             if (optionalStudent.isPresent()) {
                 throw new DuplicateException("Duplicate student ID: " + studentDTO.getStudentId());
             }
+
             Student student = converter.getStudent(studentDTO);
             return studentDAO.save(student);
 
@@ -76,7 +77,6 @@ public class StudentBOImpl implements StudentBO {
     @Override
     public boolean deleteStudents(String id) throws SQLException, ClassNotFoundException, InUseException {
         try {
-            // Check if student exists
             Optional<Student> optionalStudent = studentDAO.findById(id);
             if (optionalStudent.isEmpty()) {
                 throw new NotFoundException("Student not found with ID: " + id);
@@ -86,7 +86,6 @@ public class StudentBOImpl implements StudentBO {
                 throw new InUseException("Cannot delete student. Student has existing enrollments");
             }
 
-            // Delete student
             return studentDAO.delete(id);
 
         } catch (NotFoundException | InUseException e) {
@@ -117,5 +116,10 @@ public class StudentBOImpl implements StudentBO {
         } catch (Exception e) {
             throw new SQLException("Failed to generate next student ID", e);
         }
+    }
+
+    @Override
+    public ArrayList<String> getAllStudentsIds() throws SQLException, ClassNotFoundException {
+        return (ArrayList<String>) studentDAO.getAllIds();
     }
 }
