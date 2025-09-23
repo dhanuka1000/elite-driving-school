@@ -11,7 +11,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.elitedrivingschool.controller.ManageCourseFromController">
    <children>
       <AnchorPane layoutX="5.0" layoutY="7.0" prefHeight="425.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -107,7 +106,7 @@
                         <Insets top="30.0" />
                      </VBox.margin>
                   </HBox>
-                  <TableView fx:id="tblCourse" prefHeight="174.0" prefWidth="600.0">
+                  <TableView fx:id="tblCourse" onMouseClicked="#onTableClick" prefHeight="174.0" prefWidth="600.0">
                      <columns>
                         <TableColumn fx:id="colId" prefWidth="75.0" text="Course Id" />
                         <TableColumn fx:id="colName" prefWidth="75.0" text="Course Name" />

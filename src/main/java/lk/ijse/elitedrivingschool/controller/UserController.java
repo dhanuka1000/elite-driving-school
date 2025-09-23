@@ -7,14 +7,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import lk.ijse.elitedrivingschool.bo.custom.BOFactory;
-import lk.ijse.elitedrivingschool.bo.custom.LessonBO;
 import lk.ijse.elitedrivingschool.bo.custom.UserBO;
-import lk.ijse.elitedrivingschool.dto.LessionDTO;
 import lk.ijse.elitedrivingschool.dto.UserDTO;
-import lk.ijse.elitedrivingschool.dto.tm.LessionTm;
 import lk.ijse.elitedrivingschool.dto.tm.UserTM;
 
-import java.time.LocalDate;
 import java.util.Optional;
 import java.util.regex.Pattern;
 

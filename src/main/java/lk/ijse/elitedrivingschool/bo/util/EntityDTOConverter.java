@@ -3,14 +3,8 @@ package lk.ijse.elitedrivingschool.bo.util;
 import lk.ijse.elitedrivingschool.dao.DAOFactory;
 import lk.ijse.elitedrivingschool.dao.DAOTypes;
 import lk.ijse.elitedrivingschool.dao.custom.LessonDAO;
-import lk.ijse.elitedrivingschool.dto.InstructorDTO;
-import lk.ijse.elitedrivingschool.dto.LessionDTO;
-import lk.ijse.elitedrivingschool.dto.StudentDTO;
-import lk.ijse.elitedrivingschool.dto.UserDTO;
-import lk.ijse.elitedrivingschool.entity.Instructor;
-import lk.ijse.elitedrivingschool.entity.Lesson;
-import lk.ijse.elitedrivingschool.entity.Student;
-import lk.ijse.elitedrivingschool.entity.User;
+import lk.ijse.elitedrivingschool.dto.*;
+import lk.ijse.elitedrivingschool.entity.*;
 
 import java.sql.SQLException;
 import java.util.Optional;
@@ -107,5 +101,25 @@ public class EntityDTOConverter {
         instructor.setPhone(dto.getPhone());
         instructor.setSpecialization(dto.getSpecialization());
         return instructor;
+    }
+
+    public CourseDTO getCourseDTO(Course course) {
+        return new CourseDTO(
+                course.getCourseId(),
+                course.getName(),
+                course.getDuration(),
+                course.getFee(),
+                course.getDescription()
+        );
+    }
+
+    public Course getCourse(CourseDTO dto) {
+        Course course = new Course();
+        course.setCourseId(dto.getCourseId());
+        course.setName(dto.getName());
+        course.setDuration(dto.getDuration());
+        course.setFee(dto.getFee());
+        course.setDescription(dto.getDescription());
+        return course;
     }
 }
