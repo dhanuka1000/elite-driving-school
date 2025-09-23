@@ -3,9 +3,11 @@ package lk.ijse.elitedrivingschool.bo.util;
 import lk.ijse.elitedrivingschool.dao.DAOFactory;
 import lk.ijse.elitedrivingschool.dao.DAOTypes;
 import lk.ijse.elitedrivingschool.dao.custom.LessonDAO;
+import lk.ijse.elitedrivingschool.dto.InstructorDTO;
 import lk.ijse.elitedrivingschool.dto.LessionDTO;
 import lk.ijse.elitedrivingschool.dto.StudentDTO;
 import lk.ijse.elitedrivingschool.dto.UserDTO;
+import lk.ijse.elitedrivingschool.entity.Instructor;
 import lk.ijse.elitedrivingschool.entity.Lesson;
 import lk.ijse.elitedrivingschool.entity.Student;
 import lk.ijse.elitedrivingschool.entity.User;
@@ -85,5 +87,25 @@ public class EntityDTOConverter {
         user.setPassword(dto.getPassword());
         user.setRole(dto.getRole());
         return user;
+    }
+
+    public InstructorDTO getInstructorDTO(Instructor instructor) {
+        return new InstructorDTO(
+                instructor.getInstructorId(),
+                instructor.getFullName(),
+                instructor.getEmail(),
+                instructor.getPhone(),
+                instructor.getSpecialization()
+        );
+    }
+
+    public Instructor getInstructor(InstructorDTO dto) {
+        Instructor instructor = new Instructor();
+        instructor.setInstructorId(dto.getInstructorId());
+        instructor.setFullName(dto.getFullName());
+        instructor.setEmail(dto.getEmail());
+        instructor.setPhone(dto.getPhone());
+        instructor.setSpecialization(dto.getSpecialization());
+        return instructor;
     }
 }

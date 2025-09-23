@@ -1,10 +1,7 @@
 package lk.ijse.elitedrivingschool.bo.custom;
 
 import lk.ijse.elitedrivingschool.bo.SuperBO;
-import lk.ijse.elitedrivingschool.bo.custom.impl.LessonBOImpl;
-import lk.ijse.elitedrivingschool.bo.custom.impl.PaymentBOImpl;
-import lk.ijse.elitedrivingschool.bo.custom.impl.StudentBOImpl;
-import lk.ijse.elitedrivingschool.bo.custom.impl.UserBOImpl;
+import lk.ijse.elitedrivingschool.bo.custom.impl.*;
 import lk.ijse.elitedrivingschool.dao.custom.impl.CourseDAOImpl;
 import lk.ijse.elitedrivingschool.dao.custom.impl.InstructorDAOImpl;
 
@@ -29,8 +26,8 @@ public class BOFactory {
 
     public <Hello extends SuperBO> Hello getBO(BOTypes boType) {
         return switch (boType) {
-            case COURSE -> (Hello) new CourseDAOImpl();
-            case INSTRUCTOR -> (Hello) new InstructorDAOImpl();
+            case COURSE -> (Hello) new CourseBOImpl();
+            case INSTRUCTOR -> (Hello) new InstructorBOImpl();
             case LESSON -> (Hello) new LessonBOImpl();
             case PAYMENT -> (Hello) new PaymentBOImpl();
             case STUDENT -> (Hello) new StudentBOImpl();
