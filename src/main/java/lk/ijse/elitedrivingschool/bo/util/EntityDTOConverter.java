@@ -9,6 +9,7 @@ import lk.ijse.elitedrivingschool.dto.*;
 import lk.ijse.elitedrivingschool.entity.*;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -81,7 +82,6 @@ public class EntityDTOConverter {
                     enrolment.setId(student.getStudentId() + "-" + courseId);
                     enrolment.setStudent(student);
                     enrolment.setCourse(course);
-                    enrolment.setEnrolmentDate(java.time.LocalDate.now());
 
                     student.getEnrolments().add(enrolment);
                 } else {
@@ -180,5 +180,47 @@ public class EntityDTOConverter {
             }
         }
         return payment;
+    }
+
+    public EnrolmentDTO getEnrolmentDTO(Enrolment enrolment) {
+
+        ArrayList<String> courseIds = new ArrayList<>();
+        if (enrolment.getCourse() != null) {
+            courseIds.add(enrolment.getCourse().getCourseId());
+        }
+
+        return new EnrolmentDTO(
+                enrolment.getId(),
+                enrolment.getStudent() != null ? Collections.singletonList(enrolment.getStudent().getStudentId()) : null,
+                courseIds,
+                enrolment.getEnrolmentDate(),
+                enrolment.getUpfrontPaid()
+        );
+    }
+
+    public Enrolment getEnrolment(EnrolmentDTO dto) throws SQLException {
+
+        Enrolment enrolment = new Enrolment();
+
+        enrolment.setId(dto.getId());
+        enrolment.setEnrolmentDate(dto.getEnrolmentDate());
+        enrolment.setUpfrontPaid(dto.getUpfrontPaid());
+
+        if (dto.getStudentId() != null && !dto.getStudentId().isEmpty()) {
+            Optional<Student> studentOptional = studentDAO.findById(dto.getStudentId().get(0));
+            studentOptional.ifPresent(enrolment::setStudent);
+        }
+
+        if (dto.getCourseIds() != null && !dto.getCourseIds().isEmpty()) {
+            String courseId = dto.getCourseIds().get(0);
+            Optional<Course> courseOptional = courseDAO.findById(courseId);
+            if (courseOptional.isPresent()) {
+                enrolment.setCourse(courseOptional.get());
+            } else {
+                throw new SQLException("Course not found with ID: " + courseId);
+            }
+        }
+
+        return enrolment;
     }
 }

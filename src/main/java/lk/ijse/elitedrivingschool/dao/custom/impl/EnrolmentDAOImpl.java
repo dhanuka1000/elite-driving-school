@@ -2,6 +2,7 @@ package lk.ijse.elitedrivingschool.dao.custom.impl;
 
 import lk.ijse.elitedrivingschool.config.FactoryConfiguration;
 import lk.ijse.elitedrivingschool.dao.custom.EnrolmentDAO;
+import lk.ijse.elitedrivingschool.entity.Course;
 import lk.ijse.elitedrivingschool.entity.Enrolment;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -9,6 +10,7 @@ import org.hibernate.query.Query;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
 public class EnrolmentDAOImpl implements EnrolmentDAO {
     @Override
@@ -93,6 +95,38 @@ public class EnrolmentDAOImpl implements EnrolmentDAO {
                     "SELECT COUNT(e) FROM Enrolment e WHERE e.student.studentId = :id", Long.class);
             query.setParameter("id", id);
             return query.uniqueResult() > 0;
+        }
+    }
+
+    @Override
+    public List<String> getAllStudentIds() throws SQLException {
+        try (Session session = FactoryConfiguration.getInstance().getSession()) {
+            return session.createQuery("SELECT DISTINCT e.student.studentId FROM Enrolment e", String.class).list();
+        } catch (Exception e) {
+            throw new SQLException("Failed to get all student IDs", e);
+        }
+    }
+
+    @Override
+    public List<String> getCourseIdsByStudent(String studentId) throws SQLException {
+        try (Session session = FactoryConfiguration.getInstance().getSession()) {
+            Query<String> query = session.createQuery(
+                    "SELECT e.course.courseId FROM Enrolment e WHERE e.student.studentId = :id", String.class);
+            query.setParameter("id", studentId);
+            return query.list();
+        } catch (Exception e) {
+            throw new SQLException("Failed to get course IDs for student", e);
+        }
+    }
+
+    @Override
+    public Optional<Enrolment> findById(String id) throws SQLException {
+
+        try (Session session = FactoryConfiguration.getInstance().getSession()) {
+            Enrolment enrolment = session.get(Enrolment.class, id);
+            return Optional.ofNullable(enrolment);
+        } catch (Exception e) {
+            throw new SQLException("Failed to find lesson by ID", e);
         }
     }
 }

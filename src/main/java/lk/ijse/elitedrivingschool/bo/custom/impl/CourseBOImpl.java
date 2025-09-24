@@ -8,9 +8,7 @@ import lk.ijse.elitedrivingschool.dao.DAOFactory;
 import lk.ijse.elitedrivingschool.dao.DAOTypes;
 import lk.ijse.elitedrivingschool.dao.custom.CourseDAO;
 import lk.ijse.elitedrivingschool.dto.CourseDTO;
-import lk.ijse.elitedrivingschool.dto.LessionDTO;
 import lk.ijse.elitedrivingschool.entity.Course;
-import lk.ijse.elitedrivingschool.entity.Lesson;
 
 import java.sql.SQLException;
 import java.util.ArrayList;

@@ -6,11 +6,8 @@ import lk.ijse.elitedrivingschool.bo.exception.NotFoundException;
 import lk.ijse.elitedrivingschool.bo.util.EntityDTOConverter;
 import lk.ijse.elitedrivingschool.dao.DAOFactory;
 import lk.ijse.elitedrivingschool.dao.DAOTypes;
-import lk.ijse.elitedrivingschool.dao.custom.LessonDAO;
 import lk.ijse.elitedrivingschool.dao.custom.UserDAO;
-import lk.ijse.elitedrivingschool.dto.LessionDTO;
 import lk.ijse.elitedrivingschool.dto.UserDTO;
-import lk.ijse.elitedrivingschool.entity.Lesson;
 import lk.ijse.elitedrivingschool.entity.User;
 
 import java.sql.SQLException;

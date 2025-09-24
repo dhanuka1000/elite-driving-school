@@ -21,6 +21,7 @@ public class BOFactory {
         LESSON,
         PAYMENT,
         STUDENT,
+        ENROLMENT,
         USER
     }
 
@@ -32,6 +33,7 @@ public class BOFactory {
             case PAYMENT -> (Hello) new PaymentBOImpl();
             case STUDENT -> (Hello) new StudentBOImpl();
             case USER -> (Hello) new UserBOImpl();
+            case ENROLMENT -> (Hello) new EmrolmentBOImpl();
         };
     }
 }

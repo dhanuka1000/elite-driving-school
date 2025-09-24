@@ -49,21 +49,19 @@ public class PaymentBOImpl implements PaymentBO {
             if (optionalPayment.isPresent()) {
                 throw new DuplicateException("Duplicate payment ID: " + paymentDTO.getPaymentId());
             }
-            if (paymentDTO.getStudentId() == null || paymentDTO.getStudentId().isEmpty()) {
-                String newStudentId = new StudentBOImpl().generateNewStudentId();
 
-                Student student = new Student();
-                student.setStudentId(newStudentId);
-                student.setFullName("Student");
-                student.setEmail("email@gmail.com");
-                student.setPhone("0112233444");
-                student.setDob("****-**-**");
-                student.setAddress("Address");
-
-                studentDAO.save(student);
-
-                paymentDTO.setStudentId(newStudentId);
+            Optional<Student> optionalStudent = studentDAO.findById(paymentDTO.getStudentId());
+            if (optionalStudent.isEmpty()) {
+                Student newStudent = new Student();
+                newStudent.setStudentId(paymentDTO.getStudentId());
+                newStudent.setFullName("Student");
+                newStudent.setEmail("email@gmail.com");
+                newStudent.setPhone("0112233444");
+                newStudent.setDob("****-**-**");
+                newStudent.setAddress("Address");
+                studentDAO.save(newStudent);
             }
+
             Payment payment = converter.getPayment(paymentDTO);
             return paymentDAO.save(payment);
 

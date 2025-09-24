@@ -21,6 +21,7 @@ import java.util.regex.Pattern;
 public class ManagePaymentFromController {
 
     private static final Pattern NAME_PATTERN = Pattern.compile("^[A-Za-z\\s]{3,50}$");
+    public TextField txtStudentId;
     PaymentBO paymentBO =(PaymentBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.PAYMENT);
     StudentBO studentBO =(StudentBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.STUDENT);
 
@@ -33,8 +34,8 @@ public class ManagePaymentFromController {
     @FXML
     private Button btnUpdate;
 
-    @FXML
-    private ComboBox<String> cmbId;
+//    @FXML
+//    private ComboBox<String> cmbId;
 
     @FXML
     private TableColumn<PaymentTM, String> colAmount;
@@ -74,10 +75,8 @@ public class ManagePaymentFromController {
 
     private void loadStudentIds() {
         try {
-            List<String> studentId = studentBO.getAllStudentsIds();
-            cmbId.getItems().clear();
-            cmbId.getItems().addAll(studentId);
-        } catch (SQLException | ClassNotFoundException e) {
+            txtStudentId.setText(studentBO.getNextId());
+        } catch (Exception e) {
             new Alert(Alert.AlertType.ERROR, "Failed to load student IDs").show();
             e.printStackTrace();
         }
@@ -103,7 +102,7 @@ public class ManagePaymentFromController {
             txtDate.setText("");
             txtPaymentMethod.setText("");
             txtStatus.setText("");
-            cmbId.getSelectionModel().clearSelection();
+//            txtStudentId.setText("");
 
         }catch (Exception e){
             e.printStackTrace();
@@ -184,7 +183,7 @@ public class ManagePaymentFromController {
             txtDate.setText(String.valueOf(selected.getPaymentDate()));
             txtPaymentMethod.setText(selected.getPaymentMethod());
             txtStatus.setText(selected.getStatus());
-            cmbId.getSelectionModel().select(selected.getStudentId());
+            txtStudentId.setText(selected.getStudentId());
 
             btnAdd.setDisable(true);
             btnDelete.setDisable(false);
@@ -204,7 +203,7 @@ public class ManagePaymentFromController {
                     txtDate.getText(),
                     txtPaymentMethod.getText(),
                     txtStatus.getText(),
-                    cmbId.getValue()
+                    txtStudentId.getText()
             );
 
             if (paymentBO.savePayments(dto)) {
@@ -259,7 +258,7 @@ public class ManagePaymentFromController {
                     txtDate.getText(),
                     txtPaymentMethod.getText(),
                     txtStatus.getText(),
-                    cmbId.getValue()
+                    txtStudentId.getText()
             );
 
             if (paymentBO.updatePayments(dto)) {
