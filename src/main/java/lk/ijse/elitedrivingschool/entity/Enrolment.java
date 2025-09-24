@@ -17,8 +17,9 @@ public class Enrolment {
     @Column(name = "enrolment_id", nullable = false, length = 20)
     private String id;
 
+    // 🔗 Enrolment -> Student
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "student_id", referencedColumnName = "student_id")  // FIXED: changed to "student_id"
+    @JoinColumn(name = "student_id", referencedColumnName = "student_id")
     private Student student;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -29,5 +30,5 @@ public class Enrolment {
     private LocalDate enrolmentDate;
 
     @Column(name = "upfront_paid")
-    private LocalDate upfrontPaid;
+    private Double upfrontPaid;
 }

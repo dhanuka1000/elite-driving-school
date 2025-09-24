@@ -58,6 +58,7 @@ public class StudentBOImpl implements StudentBO {
 
     @Override
     public boolean updateStudents(StudentDTO studentDTO) throws SQLException, ClassNotFoundException {
+
         try {
             Optional<Student> optionalStudent = studentDAO.findById(studentDTO.getStudentId());
             if (optionalStudent.isEmpty()) {

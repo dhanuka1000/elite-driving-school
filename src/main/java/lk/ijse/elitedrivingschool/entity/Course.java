@@ -29,4 +29,8 @@ public class Course {
 
     @Column(name = "description")
     private String description;
+
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ToString.Exclude
+    private List<Enrolment> enrolments = new ArrayList<>();
 }

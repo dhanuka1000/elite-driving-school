@@ -2,20 +2,33 @@ package lk.ijse.elitedrivingschool.bo.util;
 
 import lk.ijse.elitedrivingschool.dao.DAOFactory;
 import lk.ijse.elitedrivingschool.dao.DAOTypes;
+import lk.ijse.elitedrivingschool.dao.custom.CourseDAO;
 import lk.ijse.elitedrivingschool.dao.custom.LessonDAO;
 import lk.ijse.elitedrivingschool.dao.custom.StudentDAO;
 import lk.ijse.elitedrivingschool.dto.*;
 import lk.ijse.elitedrivingschool.entity.*;
 
 import java.sql.SQLException;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 public class EntityDTOConverter {
 
     private final LessonDAO lessonDAO = DAOFactory.getInstance().getDAO(DAOTypes.LESSON);
     private final StudentDAO studentDAO = DAOFactory.getInstance().getDAO(DAOTypes.STUDENT);
+    private final CourseDAO courseDAO = DAOFactory.getInstance().getDAO(DAOTypes.COURSE);
 
     public StudentDTO getStudentDTO(Student student) {
+
+
+        List<String> courseIds = null;
+        if (student.getEnrolments() != null && !student.getEnrolments().isEmpty()) {
+            courseIds = student.getEnrolments().stream()
+                    .map(e -> e.getCourse().getCourseId())
+                    .toList();
+        }
+
         return new StudentDTO(
                 student.getStudentId(),
                 student.getFullName(),
@@ -23,7 +36,7 @@ public class EntityDTOConverter {
                 student.getPhone(),
                 student.getDob(),
                 student.getAddress(),
-                student.getLesson() != null ? student.getLesson().getLessonId() : null
+                courseIds
         );
     }
 
@@ -56,14 +69,27 @@ public class EntityDTOConverter {
         student.setDob(dto.getDob());
         student.setAddress(dto.getAddress());
 
-        if (dto.getLesson() != null) {
-            Optional<Lesson> lessonOptional = lessonDAO.findById(dto.getLesson());
-            if (lessonOptional.isPresent()) {
-                student.setLesson(lessonOptional.get());
-            } else {
-                throw new SQLException("Lesson not found with ID: " + dto.getLesson());
+        if (dto.getCourseIds() != null && !dto.getCourseIds().isEmpty()) {
+            student.setEnrolments(new java.util.ArrayList<>());
+
+            for (String courseId : dto.getCourseIds()) {
+                Optional<Course> courseOptional = courseDAO.findById(courseId.trim());
+                if (courseOptional.isPresent()) {
+                    Course course = courseOptional.get();
+
+                    Enrolment enrolment = new Enrolment();
+                    enrolment.setId(student.getStudentId() + "-" + courseId);
+                    enrolment.setStudent(student);
+                    enrolment.setCourse(course);
+                    enrolment.setEnrolmentDate(java.time.LocalDate.now());
+
+                    student.getEnrolments().add(enrolment);
+                } else {
+                    throw new SQLException("Course not found with ID: " + courseId);
+                }
             }
         }
+
         return student;
     }
 

@@ -2,8 +2,6 @@ package lk.ijse.elitedrivingschool.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,15 +34,14 @@ public class Student {
     private String address;
 
     @ManyToOne
-    @JoinColumn(name = "les_id")
-    private Lesson lesson;
-
-    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @ToString.Exclude
-    private List<Enrolment> enrolments = new ArrayList<>();
+    @JoinColumn(name = "cos_id")
+    private Course course;
 
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @ToString.Exclude
     private List<Payment> payments = new ArrayList<>();
 
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ToString.Exclude
+    private List<Enrolment> enrolments = new ArrayList<>();
 }
