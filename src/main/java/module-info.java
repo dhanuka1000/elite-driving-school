@@ -10,6 +10,7 @@ module lk.ijse.elitedrivingschool {
     requires modelmapper;
     requires bcrypt;
     requires java.desktop;
+    requires jbcrypt;
 
     // Controllers need reflection for FXML injection
     opens lk.ijse.elitedrivingschool.controller to javafx.fxml;

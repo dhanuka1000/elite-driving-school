@@ -83,12 +83,17 @@ public class ManagePaymentFromController {
     }
 
     public void initialize() {
-        setCellValueFactory();
-        resetPage();
+        try {
+            resetPage();
+        } catch (Exception e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Something went wrong, please try again").show();
+        }
     }
 
     private void resetPage() {
 
+        setCellValueFactory();
         try {
             loadTableData();
             loadNextId();

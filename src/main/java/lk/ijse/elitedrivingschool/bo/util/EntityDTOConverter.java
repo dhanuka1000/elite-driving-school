@@ -94,6 +94,7 @@ public class EntityDTOConverter {
     }
 
     public UserDTO getUserDTO(User user) {
+        if (user == null) return null;
         return new UserDTO(
                 user.getUserId(),
                 user.getUserName(),
@@ -103,12 +104,13 @@ public class EntityDTOConverter {
     }
 
     public User getUser(UserDTO dto) {
-        User user = new User();
-        user.setUserId(dto.getUserId());
-        user.setUserName(dto.getUserName());
-        user.setPassword(dto.getPassword());
-        user.setRole(dto.getRole());
-        return user;
+        if (dto == null) return null;
+        return new User(
+                dto.getUserId(),
+                dto.getUserName(),
+                dto.getPassword(),
+                dto.getRole()
+        );
     }
 
     public InstructorDTO getInstructorDTO(Instructor instructor) {

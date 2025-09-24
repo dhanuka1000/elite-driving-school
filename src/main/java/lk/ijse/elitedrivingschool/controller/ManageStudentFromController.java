@@ -202,11 +202,42 @@ public class ManageStudentFromController {
         setCellValueFactory();
         try {
             resetPage();
+            applyRoleAccess();
         } catch (Exception e) {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR, "Something went wrong, please try again").show();
         }
     }
+
+    private void applyRoleAccess() {
+        String role = DashboardController.getCurrentRole();
+
+        if ("admin".equalsIgnoreCase(role)) {
+            btnAddPatient.setDisable(false);
+            btnUpdatePatient.setDisable(false);
+            btnDeletePatient.setDisable(false);
+            btnCourse.setDisable(false);
+            btnEnrolment.setDisable(false);
+            btnInstructor.setDisable(false);
+            btnPayment.setDisable(false);
+            btnLesson.setDisable(false);
+            btnUser.setDisable(false);
+
+        } else if ("user".equalsIgnoreCase(role)) {
+            btnAddPatient.setDisable(false);
+            btnUpdatePatient.setDisable(false);
+            btnDeletePatient.setDisable(false);
+            btnStudent.setDisable(false);
+            btnPayment.setDisable(false);
+            btnLesson.setDisable(false);
+
+            btnCourse.setDisable(true);
+            btnEnrolment.setDisable(true);
+            btnInstructor.setDisable(true);
+            btnUser.setDisable(true);
+        }
+    }
+
 
     private void loadCoursesToList() throws SQLException, ClassNotFoundException {
 

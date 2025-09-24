@@ -9,6 +9,7 @@ import lk.ijse.elitedrivingschool.dao.DAOTypes;
 import lk.ijse.elitedrivingschool.dao.custom.UserDAO;
 import lk.ijse.elitedrivingschool.dto.UserDTO;
 import lk.ijse.elitedrivingschool.entity.User;
+import org.mindrot.jbcrypt.BCrypt;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -25,7 +26,6 @@ public class UserBOImpl implements UserBO {
         try {
             List<User> users = userDAO.getAll();
             ArrayList<UserDTO> userDTOS = new ArrayList<>();
-
             for (User user : users) {
                 userDTOS.add(converter.getUserDTO(user));
             }
@@ -40,12 +40,15 @@ public class UserBOImpl implements UserBO {
         try {
             Optional<User> optionalUser = userDAO.findById(userDTO.getUserId());
             if (optionalUser.isPresent()) {
-                throw new DuplicateException("Duplicate lesson ID: " + userDTO.getUserId());
+                throw new DuplicateException("Duplicate user ID: " + userDTO.getUserId());
             }
+
+            // Hash the password before saving
+            String hashedPassword = BCrypt.hashpw(userDTO.getPassword(), BCrypt.gensalt());
+            userDTO.setPassword(hashedPassword);
 
             User user = converter.getUser(userDTO);
             return userDAO.save(user);
-
         } catch (DuplicateException e) {
             throw e;
         } catch (Exception e) {
@@ -59,6 +62,14 @@ public class UserBOImpl implements UserBO {
             Optional<User> optionalUser = userDAO.findById(userDTO.getUserId());
             if (optionalUser.isEmpty()) {
                 throw new NotFoundException("User not found with ID: " + userDTO.getUserId());
+            }
+
+            // Keep existing password if empty
+            if (userDTO.getPassword() == null || userDTO.getPassword().isEmpty()) {
+                userDTO.setPassword(optionalUser.get().getPassword());
+            } else {
+                // Hash new password
+                userDTO.setPassword(BCrypt.hashpw(userDTO.getPassword(), BCrypt.gensalt()));
             }
 
             User user = converter.getUser(userDTO);
@@ -78,9 +89,7 @@ public class UserBOImpl implements UserBO {
             if (optionalUser.isEmpty()) {
                 throw new NotFoundException("User not found with ID: " + id);
             }
-
             return userDAO.delete(id);
-
         } catch (NotFoundException e) {
             throw e;
         } catch (Exception e) {
@@ -108,6 +117,38 @@ public class UserBOImpl implements UserBO {
             return tableChar + "001";
         } catch (Exception e) {
             throw new SQLException("Failed to generate next User ID", e);
+        }
+    }
+
+    @Override
+    public UserDTO login(String username, String password) throws SQLException, ClassNotFoundException {
+        try {
+            Optional<User> optionalUser = userDAO.findById(username);
+            if (optionalUser.isEmpty()) return null;
+
+            User user = optionalUser.get();
+            // Check entered password against hashed password in DB
+            if (BCrypt.checkpw(password, user.getPassword())) {
+                return new UserDTO(user.getUserId(), user.getUserName(), null, user.getRole());
+            }
+            return null;
+        } catch (Exception e) {
+            throw new SQLException("Login failed", e);
+        }
+    }
+
+    @Override
+    public Optional<User> findByUsername(String usernameInput) throws SQLException {
+        try {
+            List<User> allUsers = userDAO.getAll();
+            for (User user : allUsers) {
+                if (user.getUserName().equalsIgnoreCase(usernameInput)) {
+                    return Optional.of(user);
+                }
+            }
+            return Optional.empty();
+        } catch (Exception e) {
+            throw new SQLException("Failed to find user by username", e);
         }
     }
 }
